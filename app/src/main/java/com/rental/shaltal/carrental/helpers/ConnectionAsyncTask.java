@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
 
-public class ConnectionAsyncTask extends AsyncTask<String,String,String>{
+public class ConnectionAsyncTask extends AsyncTask<String,String,Boolean>{
     private static String TAG = "ConnectionAsyncTask";
 
     private Activity activity;
@@ -18,9 +18,19 @@ public class ConnectionAsyncTask extends AsyncTask<String,String,String>{
     }
 
     @Override
-    protected void onPostExecute(String s) {
-        Log.i(TAG, "onPostExecute: "+s);
-        super.onPostExecute(s);
+    protected void onPostExecute(Boolean bool) {
+        Log.i(TAG, "onPostExecute: "+bool);
+        super.onPostExecute(bool);
+
+        if (bool){
+            moveToNextPage();
+        }
+        else{
+            stayAndDisplayError();
+        }
+
+
+
     }
 
     @Override
@@ -29,16 +39,16 @@ public class ConnectionAsyncTask extends AsyncTask<String,String,String>{
     }
 
     @Override
-    protected String doInBackground(String... strings) {
-        try {
-            if (strings.length != 2)
-                throw new Exception("");
-            return RestConnection.connect(strings[0], strings[1]);
-        }
-        catch (Exception e){
-            Log.e(TAG, "doInBackground: ", e);
-        }
+    protected Boolean doInBackground(String... strings) {
+        return RestConnection.testConnection(strings[0]);
+    }
 
-        return null;
+
+    private void moveToNextPage() {
+
+    }
+
+    private void stayAndDisplayError(){
+
     }
 }
