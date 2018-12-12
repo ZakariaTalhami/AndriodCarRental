@@ -13,10 +13,11 @@ public class User {
     private String city;
     private String phoneNumber;
     private String email;
+    private String image;
 
     public User(){}
 
-    public User(String firstName, String lastName, GenderEnum gender, String password, String country, String city, String phoneNumber, String email) {
+    public User(String firstName, String lastName, GenderEnum gender, String password, String country, String city, String phoneNumber, String email ,String image) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
@@ -25,6 +26,7 @@ public class User {
         this.city = city;
         this.phoneNumber = phoneNumber;
         this.email = email;
+        this.image = image;
     }
 
     public String getFirstName() {
@@ -91,6 +93,14 @@ public class User {
         this.email = email;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -102,6 +112,7 @@ public class User {
                 ", city='" + city + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", email='" + email + '\'' +
+                ", image='" + image + '\'' +
                 '}';
     }
 }

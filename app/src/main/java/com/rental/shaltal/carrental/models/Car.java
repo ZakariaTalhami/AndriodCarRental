@@ -1,14 +1,17 @@
 package com.rental.shaltal.carrental.models;
 
-public class Car {
+public class
+Car {
     private String year;
     private String make;
     private String model;
 //    Distance as String ????
-    private String Distance;
+    private String distance;
     private int price;
     private boolean accidents;
     private boolean offer;
+
+    private int id;
 
 
     public Car() {
@@ -18,7 +21,7 @@ public class Car {
         this.year = year;
         this.make = make;
         this.model = model;
-        Distance = distance;
+        this.distance = distance;
         this.price = price;
         this.accidents = accidents;
         this.offer = offer;
@@ -49,11 +52,11 @@ public class Car {
     }
 
     public String getDistance() {
-        return Distance;
+        return distance;
     }
 
     public void setDistance(String distance) {
-        Distance = distance;
+        distance = distance;
     }
 
     public int getPrice() {
@@ -80,13 +83,21 @@ public class Car {
         this.offer = offer;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "Car{" +"\n"+
                 "year='" + year + '\'' +"\n"+
                 ", make='" + make + '\'' +"\n"+
                 ", model='" + model + '\'' +"\n"+
-                ", Distance='" + Distance + '\'' +"\n"+
+                ", Distance='" + distance + '\'' +"\n"+
                 ", price=" + price +"\n"+
                 ", accidents=" + accidents +"\n"+
                 ", offer=" + offer +"\n"+
