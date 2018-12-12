@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.rental.shaltal.carrental.models.Car;
+import com.rental.shaltal.carrental.singleton.CarSingleton;
 
 import java.util.List;
 
@@ -26,8 +27,14 @@ public class GetCarsAsyncTask extends AsyncTask<String,String,String> {
 
         Log.i(TAG, "onPostExecute: "+s);
         super.onPostExecute(s);
-        List<Car> carList = CarJSONParser.getCarsFromJSON(s);
-        Log.i(TAG, "onPostExecute: "+carList);
+        if (s != null && s.isEmpty()) {
+            CarSingleton carSingleton = CarSingleton.getInstance();
+            List<Car> carList = CarJSONParser.getCarsFromJSON(s);
+            carSingleton.setCarList(carList);
+            Log.i(TAG, "onPostExecute: " + carList);
+        }else{
+            Log.e(TAG, "onPostExecute: Connection with the server returned empty");
+        }
 
     }
 
