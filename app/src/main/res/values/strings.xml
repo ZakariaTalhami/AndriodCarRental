@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">CarRental</string>
+    <string name="login_email">Account Email</string>
+    <string name="login_pass">Account Password</string>
+    <string name="login_loginBtn">Login</string>
+    <string name="login_registerBtn">Register</string>
+    <string name="login_RememberMe">Remember me</string>
 </resources>
