@@ -1,8 +1,26 @@
 <resources>
     <string name="app_name">CarRental</string>
+
+    <!-- Login screen Strings -->
     <string name="login_email">Account Email</string>
     <string name="login_pass">Account Password</string>
     <string name="login_loginBtn">Login</string>
     <string name="login_registerBtn">Register</string>
     <string name="login_RememberMe">Remember me</string>
+
+    <!-- Register screen String -->
+    <string name="register_firstName">First Name</string>
+    <string name="register_lastName">Last Name</string>
+    <string name="register_email">Email</string>
+    <string name="register_gender">Gender</string>
+    <string name="register_password">Password</string>
+    <string name="register_ConfirmPassword">Confirm Password</string>
+    <string name="register_Country">Country</string>
+    <string name="register_city">City</string>
+    <string name="Register_phoneNumber">Phone Number</string>
+
+    <string name="Register_btnRegister">Register</string>
+    <string name="Register_btnBack">Back</string>
+
+
 </resources>

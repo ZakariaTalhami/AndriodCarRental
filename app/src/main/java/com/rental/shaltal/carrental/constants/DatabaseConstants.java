@@ -18,6 +18,8 @@ public final class DatabaseConstants {
     public static final String USER_EMAIL = "email";
     public static final String USER_IMAGE = "image";
 
+    public static final String USER_DEFAULT_IMAGE = "";
+
 
 //    Car Constants
 

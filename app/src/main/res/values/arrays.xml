@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="GenderList" >
+        <item>Female</item>
+        <item>Male</item>
+        <item>Other</item>
+    </string-array>
+
+    <!-- Register Spanner Data -->
+    <string-array name="countryList">
+        <item>Palestine</item>
+        <item>Jordan</item>
+        <item>Egypt</item>
+        <item>Syria</item>
+    </string-array>
+
+
+    <string-array name="palestineCities">
+        <item>Ramallah</item>
+        <item>Birzeit</item>
+        <item>Nablas</item>
+        <item>Jerihco</item>
+    </string-array>
+
+    <string-array name="JordanCities">
+        <item>Amman</item>
+        <item>Aqaba</item>
+        <item>Irbid</item>
+        <item>Zarqa</item>
+    </string-array>
+
+    <string-array name="EgyptCities">
+        <item>Cario</item>
+        <item>Alexandria</item>
+        <item>Giza</item>
+        <item>Suez</item>
+    </string-array>
+
+    <string-array name="SyriaCities">
+        <item>Damascus</item>
+        <item>Aleppo</item>
+        <item>Homs</item>
+        <item>Lattakia</item>
+    </string-array>
+
+
+    <string-array name="countryPhoneMap">
+        <item>+0970</item>
+        <item>+0962</item>
+        <item>+0020</item>
+        <item>+0963</item>
+    </string-array>
+</resources>

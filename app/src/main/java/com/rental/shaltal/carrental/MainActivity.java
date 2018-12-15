@@ -11,6 +11,8 @@ import static com.rental.shaltal.carrental.constants.RestConstants.*;
 import com.rental.shaltal.carrental.helpers.ConnectionAsyncTask;
 import com.rental.shaltal.carrental.helpers.DatabaseHelper;
 import com.rental.shaltal.carrental.helpers.GetCarsAsyncTask;
+import com.rental.shaltal.carrental.helpers.Md5;
+import com.rental.shaltal.carrental.helpers.SharedPrefHelper;
 import com.rental.shaltal.carrental.models.Car;
 import com.rental.shaltal.carrental.models.User;
 
@@ -19,11 +21,12 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "MainActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        SharedPrefHelper.removeLoggedIn(this);
         Button btnRestTest = (Button) findViewById(R.id.bt_TestRestConnection);
         btnRestTest.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+//        String key = "classMe";
+//        Log.i(TAG, "onResume: ENC:> "+ Md5.md5(key));
 
 //        ConnectionAsyncTask connectionAsyncTask = new ConnectionAsyncTask(MainActivity.this);
 //        connectionAsyncTask.execute("http://www.mocky.io/v2/5bfea5963100006300bb4d9a");

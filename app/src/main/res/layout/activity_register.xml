@@ -1,9 +1,223 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RegisterActivity">
 
-</android.support.constraint.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- First Name field -->
+        <TextView
+            android:id="@+id/tv_RegisterFirstName"
+            android:layout_marginTop="30dp"
+            android:paddingHorizontal="40dp"
+            android:textAlignment="center"
+            android:text="@string/register_firstName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/et_RegisterFirstName"
+            android:inputType="textPersonName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="40dp"
+            android:textAlignment="center" />
+
+        <!-- Last Name field -->
+        <TextView
+            android:id="@+id/tv_RegisterLastName"
+            android:layout_marginTop="30dp"
+            android:paddingHorizontal="40dp"
+            android:textAlignment="center"
+            android:text="@string/register_lastName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/et_RegisterLastName"
+            android:inputType="textPersonName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="40dp"
+            android:textAlignment="center" />
+
+        <!-- Gender field -->
+        <TextView
+            android:id="@+id/tv_RegisterGender"
+            android:layout_marginTop="30dp"
+            android:paddingHorizontal="40dp"
+            android:textAlignment="center"
+            android:text="@string/register_gender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Spinner
+            android:id="@+id/sp_RegisterGender"
+            android:entries="@array/GenderList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="40dp"
+            android:textAlignment="center" />
+
+
+        <!-- Email  field -->
+        <TextView
+            android:id="@+id/tv_RegisterEmail"
+            android:layout_marginTop="30dp"
+            android:paddingHorizontal="40dp"
+            android:textAlignment="center"
+            android:text="@string/register_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/et_RegisterEmail"
+            android:inputType="textEmailAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="40dp"
+            android:textAlignment="center" />
+
+
+        <!-- Password field -->
+        <TextView
+            android:id="@+id/tv_RegisterPassword"
+            android:layout_marginTop="30dp"
+            android:paddingHorizontal="40dp"
+            android:textAlignment="center"
+            android:text="@string/register_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/et_RegisterPassword"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="40dp"
+            android:textAlignment="center" />
+
+        <!-- Confirm Password field -->
+        <TextView
+            android:id="@+id/tv_RegisterConfirmRegister"
+            android:layout_marginTop="30dp"
+            android:paddingHorizontal="40dp"
+            android:textAlignment="center"
+            android:text="@string/register_ConfirmPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/et_RegisterConfirmRegister"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="40dp"
+            android:textAlignment="center" />
+
+
+        <!-- Country field -->
+        <TextView
+            android:id="@+id/tv_RegisterCountry"
+            android:layout_marginTop="30dp"
+            android:paddingHorizontal="40dp"
+            android:textAlignment="center"
+            android:text="@string/register_Country"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Spinner
+            android:id="@+id/sp_RegisterCountry"
+            android:entries="@array/countryList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="40dp"
+            android:textAlignment="center" />
+
+
+        <!-- City field -->
+        <TextView
+            android:id="@+id/tv_RegisterCity"
+            android:layout_marginTop="30dp"
+            android:paddingHorizontal="40dp"
+            android:textAlignment="center"
+            android:text="@string/register_city"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Spinner
+            android:id="@+id/sp_RegisterCity"
+            android:entries="@array/countryList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="40dp"
+            android:textAlignment="center" />
+
+
+        <!-- Phone field -->
+        <TextView
+            android:id="@+id/tv_RegisterPhone"
+            android:layout_marginTop="30dp"
+            android:paddingHorizontal="40dp"
+            android:textAlignment="center"
+            android:text="@string/Register_phoneNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_RegisterPhonePrefex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/et_RegisterPhone"
+                android:inputType="phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="40dp"
+                android:textAlignment="center" />
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_marginBottom="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:orientation="horizontal"
+            android:paddingHorizontal="40dp">
+
+            <Button
+                android:id="@+id/bt_RegisterBack"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/Register_btnBack" />
+
+            <Button
+                android:id="@+id/bt_RegisterAccept"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/Register_btnRegister" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>
