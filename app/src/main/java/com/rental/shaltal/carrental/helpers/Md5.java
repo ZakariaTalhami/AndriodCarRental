@@ -3,6 +3,7 @@ package com.rental.shaltal.carrental.helpers;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+//Taken from the net
 public class Md5 {
     public static final String md5(final String s) {
         final String MD5 = "MD5";
