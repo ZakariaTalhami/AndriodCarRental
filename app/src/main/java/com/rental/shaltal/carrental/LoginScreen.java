@@ -92,7 +92,7 @@ public class LoginScreen extends AppCompatActivity {
                     SharedPrefHelper.addLoginUser(this, email , pass , user.isAdmin());
                 }
                 SharedPrefHelper.setLoggedIn(this);
-//                gotToMainPage();
+                gotToMainPage();
             } else {
                 Log.e(TAG, "login: Entered Wrong Cred");
                 displayFailedLoginMessage();
@@ -114,7 +114,7 @@ public class LoginScreen extends AppCompatActivity {
 
     private void gotToMainPage() {
         // Todo: Enter the activity for the next jump
-        Intent intent = new Intent();
+        Intent intent = new Intent(LoginScreen.this , MainPage.class);
         this.startActivity(intent);
     }
 
