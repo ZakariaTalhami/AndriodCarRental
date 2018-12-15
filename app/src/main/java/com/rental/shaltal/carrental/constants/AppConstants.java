@@ -10,6 +10,7 @@ public final class AppConstants {
     public static final String SHARED_PREF = "SHARED_PREF";
     public static final String SAVED_EMAIL = "SAVED_EMAIL";
     public static final String SAVED_PASS = "SAVED_PASS";
+    public static final String SAVED_ADMIN = "SAVED_ADMIN";
     public static final String LOGIN_FLAG = "LOGIN_FLAG";
 
 

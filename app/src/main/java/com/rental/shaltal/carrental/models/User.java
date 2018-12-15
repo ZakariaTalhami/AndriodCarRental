@@ -13,11 +13,12 @@ public class User {
     private String city;
     private String phoneNumber;
     private String email;
+    private boolean admin;
     private String image;
 
     public User(){}
 
-    public User(String firstName, String lastName, GenderEnum gender, String password, String country, String city, String phoneNumber, String email ,String image) {
+    public User(String firstName, String lastName, GenderEnum gender, String password, String country, String city, String phoneNumber, String email, boolean admin ,String image) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
@@ -27,6 +28,7 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.image = image;
+        this.admin = admin;
     }
 
     public String getFirstName() {
@@ -91,6 +93,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
     }
 
     public String getImage() {

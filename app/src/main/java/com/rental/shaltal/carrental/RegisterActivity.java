@@ -205,6 +205,7 @@ public class RegisterActivity extends AppCompatActivity {
                     city,
                     phone,
                     email,
+                    false,
                     USER_DEFAULT_IMAGE
             );
             DatabaseHelper databaseHelper = new DatabaseHelper(this);

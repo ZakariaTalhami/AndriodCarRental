@@ -8,12 +8,13 @@ import com.rental.shaltal.carrental.models.User;
 
 public class SharedPrefHelper {
 
-    public static void addLoginUser(Context context, String email , String pass){
+    public static void addLoginUser(Context context, String email , String pass , boolean admin){
 
         SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREF , Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(SAVED_EMAIL , email);
         editor.putString(SAVED_PASS , pass);
+        editor.putBoolean(SAVED_ADMIN , admin);
         editor.apply();
 
     }

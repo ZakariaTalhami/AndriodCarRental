@@ -38,6 +38,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 USER_COUNTRY+" TEXT," +
                 USER_CITY+" TEXT," +
                 USER_PHONENUMBER+" TEXT," +
+                USER_ADMIN+" INTEGER," +
                 USER_IMAGE+" TEXT)");
         Log.i(TAG, "onCreate: Creating Car");
         db.execSQL("CREATE TABLE "+TBL_CAR+"(id INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -81,6 +82,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             contentValues.put(USER_COUNTRY , user.getCountry());
             contentValues.put(USER_CITY , user.getCity());
             contentValues.put(USER_PHONENUMBER , user.getPhoneNumber());
+            contentValues.put(USER_ADMIN , (user.isAdmin())? 1:0);
             contentValues.put(USER_IMAGE , user.getImage());
 
 //            Insert User to the database
@@ -151,6 +153,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         cursor.getString(cursor.getColumnIndex(USER_CITY)),
                         cursor.getString(cursor.getColumnIndex(USER_PHONENUMBER)),
                         cursor.getString(cursor.getColumnIndex(USER_EMAIL)),
+                        (cursor.getInt(cursor.getColumnIndex(USER_ADMIN)) == 1),
                         cursor.getString(cursor.getColumnIndex(USER_IMAGE))
                 );
             }
@@ -206,7 +209,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         catch (Exception e){
             Log.e(TAG, "getCar: Failed to read car from the database ", e);
-
+        }
+        finally {
+            cursor.close();
         }
 
         return  car;
@@ -228,6 +233,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         catch (Exception e){
             Log.e(TAG, "getCar: Failed to read car from the database ", e);
 
+        }
+        finally {
+            cursor.close();
         }
 
         return  carID;
@@ -282,6 +290,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         catch (Exception e){
             Log.e(TAG, "getResrvedCars: Failed to read reserved cars from the database", e);
         }
+        finally {
+            cursor.close();
+        }
+
         return carList;
     }
 
@@ -336,6 +348,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         catch (Exception e){
             Log.e(TAG, "getFavoriteCars: Failed to read reserved cars from the database", e);
         }
+        finally {
+            cursor.close();
+        }
+
         return carList;
     }
 

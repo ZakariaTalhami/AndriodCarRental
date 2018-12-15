@@ -89,7 +89,7 @@ public class LoginScreen extends AppCompatActivity {
                 // Check if the Remember Me is checked
                 CheckBox cb_RememberMe = (CheckBox) findViewById(R.id.cb_LoginRememberMe);
                 if (cb_RememberMe.isChecked()){
-                    SharedPrefHelper.addLoginUser(this, email , pass);
+                    SharedPrefHelper.addLoginUser(this, email , pass , user.isAdmin());
                 }
                 SharedPrefHelper.setLoggedIn(this);
 //                gotToMainPage();
