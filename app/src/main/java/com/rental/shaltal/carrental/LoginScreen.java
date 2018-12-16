@@ -17,6 +17,7 @@ import com.rental.shaltal.carrental.helpers.DatabaseHelper;
 import com.rental.shaltal.carrental.helpers.Md5;
 import com.rental.shaltal.carrental.helpers.SharedPrefHelper;
 import com.rental.shaltal.carrental.models.User;
+import com.rental.shaltal.carrental.singleton.CarSingleton;
 
 public class LoginScreen extends AppCompatActivity {
 
@@ -92,6 +93,7 @@ public class LoginScreen extends AppCompatActivity {
                     SharedPrefHelper.addLoginUser(this, email , pass , user.isAdmin());
                 }
                 SharedPrefHelper.setLoggedIn(this);
+                CarSingleton.getInstance().setUser(user);
                 gotToMainPage();
             } else {
                 Log.e(TAG, "login: Entered Wrong Cred");
