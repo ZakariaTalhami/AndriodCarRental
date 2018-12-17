@@ -20,7 +20,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private String TAG = getClass().getSimpleName();
     public DatabaseHelper(Context context) {
-        super(context, "db2.0", null, 1);
+        super(context, "db2.1", null, 1);
         Log.i(TAG, "DatabaseHelper: Creating DatabaseHelper");
     }
 
