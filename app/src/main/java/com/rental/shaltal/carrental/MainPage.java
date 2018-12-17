@@ -169,6 +169,9 @@ public class MainPage extends AppCompatActivity
     }
 
     private void showCarMenu() {
+        FrameLayout mylayout = (FrameLayout) findViewById(R.id.frag_container);
+        mylayout.removeAllViews();
+
         CarMenu carMenu = new CarMenu();
         carMenu.setCarList(CarSingleton.getInstance().getCarList());
         FragmentManager fragmentManager = getFragmentManager();
