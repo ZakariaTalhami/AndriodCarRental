@@ -24,6 +24,7 @@ public class CarJSONParser {
                 Car car = new Car();
                 car.setYear(jsonObject.getString("year"));
                 car.setMake(jsonObject.getString("make"));
+                car.setModel(jsonObject.getString("model"));
                 car.setDistance(jsonObject.getString("distance"));
                 car.setPrice(jsonObject.getInt("price"));
                 car.setAccidents(jsonObject.getBoolean("accidents"));

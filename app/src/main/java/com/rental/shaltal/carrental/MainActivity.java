@@ -1,5 +1,6 @@
 package com.rental.shaltal.carrental;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -40,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
         ConnectionAsyncTask connectionAsyncTask = new ConnectionAsyncTask(MainActivity.this );
         connectionAsyncTask.execute(CAR_URL);
     }
+
+
 
     @Override
     protected void onResume() {

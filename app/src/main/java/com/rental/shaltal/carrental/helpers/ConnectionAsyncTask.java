@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.rental.shaltal.carrental.LoginScreen;
 import static com.rental.shaltal.carrental.constants.RestConstants.*;
 
+import com.rental.shaltal.carrental.MainActivity;
 import com.rental.shaltal.carrental.R;
 
 public class ConnectionAsyncTask extends AsyncTask<String,String,Boolean>{
@@ -29,12 +30,13 @@ public class ConnectionAsyncTask extends AsyncTask<String,String,Boolean>{
     protected void onPostExecute(Boolean bool) {
         Log.i(TAG, "onPostExecute: "+bool);
         super.onPostExecute(bool);
+        getCarsFromRest();
         if (bool){
             moveToNextPage();
         }
         else{
-            moveToNextPage();
-//            stayAndDisplayError();
+//            moveToNextPage();
+            stayAndDisplayError();
         }
     }
 
@@ -61,5 +63,10 @@ public class ConnectionAsyncTask extends AsyncTask<String,String,Boolean>{
         tv_ErrorMessage.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.disconnect , 0 , 0);
 
         // Create an anim to shake the textView
+    }
+
+    private void getCarsFromRest(){
+        GetCarsAsyncTask getCarsAsyncTask= new GetCarsAsyncTask(this.activity);
+        getCarsAsyncTask.execute(CAR_URL);
     }
 }

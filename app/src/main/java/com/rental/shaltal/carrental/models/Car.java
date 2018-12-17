@@ -56,7 +56,7 @@ Car {
     }
 
     public void setDistance(String distance) {
-        distance = distance;
+        this.distance = distance;
     }
 
     public int getPrice() {

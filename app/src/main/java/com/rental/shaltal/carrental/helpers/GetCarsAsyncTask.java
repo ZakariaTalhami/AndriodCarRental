@@ -27,7 +27,7 @@ public class GetCarsAsyncTask extends AsyncTask<String,String,String> {
 
         Log.i(TAG, "onPostExecute: "+s);
         super.onPostExecute(s);
-        if (s != null && s.isEmpty()) {
+        if (s != null && !s.isEmpty()) {
             CarSingleton carSingleton = CarSingleton.getInstance();
             List<Car> carList = CarJSONParser.getCarsFromJSON(s);
             carSingleton.setCarList(carList);
