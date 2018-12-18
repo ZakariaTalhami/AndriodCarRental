@@ -10,9 +10,14 @@ import android.util.Log;
 import static com.rental.shaltal.carrental.constants.DatabaseConstants.*;
 import com.rental.shaltal.carrental.constants.GenderEnum;
 import com.rental.shaltal.carrental.models.Car;
+import com.rental.shaltal.carrental.models.FavCar;
+import com.rental.shaltal.carrental.models.ReservedCar;
 import com.rental.shaltal.carrental.models.User;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -258,6 +263,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 ContentValues contentValues = new ContentValues();
                 contentValues.put(RESERVED_USER , user.getEmail());
                 contentValues.put(RESERVED_CAR, id);
+                contentValues.put(RESERVED_TIME, new Date().getTime());
                 SQLiteDatabase sqLiteDatabase = getWritableDatabase();
                 sqLiteDatabase.insertOrThrow(TBL_RESERVED , null , contentValues);
                 success = true;
@@ -269,8 +275,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return  success;
     }
 
-    public List<Car> getReservedCars(User user){
-        List<Car> carList = null;
+    public List<ReservedCar> getReservedCars(User user){
+        List<ReservedCar> carList = null;
         Cursor cursor = null;
         try{
             carList = new ArrayList<>();
@@ -279,11 +285,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     "INNER JOIN "+TBL_CAR+" ON "+TBL_CAR+".id = "+TBL_RESERVED+"."+RESERVED_CAR+" " +
                     "WHERE "+RESERVED_USER+"=? " , new String[]{user.getEmail()});
             while(cursor.moveToNext()){
-                Car car = new Car();
+                ReservedCar car = new ReservedCar();
                 car.setModel(cursor.getString(cursor.getColumnIndex(CAR_MODEL)));
                 car.setMake(cursor.getString(cursor.getColumnIndex(CAR_MAKE)));
                 car.setYear(cursor.getString(cursor.getColumnIndex(CAR_YEAR)));
-
+                long milliseconds = cursor.getLong(cursor.getColumnIndex(RESERVED_TIME));
+                Date reservedDate = new Date(milliseconds);
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+                car.setReservedDate(dateFormat.format(reservedDate));
+                car.setUser(user);
                 carList.add(car);
             }
         }
@@ -327,8 +337,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return  success;
     }
 
-    public List<Car> getFavoriteCars(User user){
-        List<Car> carList = null;
+    public List<FavCar> getFavoriteCars(User user){
+        List<FavCar> carList = null;
         Cursor cursor = null;
         try{
             carList = new ArrayList<>();
@@ -337,10 +347,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     "INNER JOIN "+TBL_CAR+" ON "+TBL_CAR+".id = "+TBL_FAVORITE+"."+FAVORITE_CAR+" " +
                     "WHERE "+FAVORITE_USER+"=? " , new String[]{user.getEmail()});
             while(cursor.moveToNext()){
-                Car car = new Car();
+                FavCar car = new FavCar();
                 car.setModel(cursor.getString(cursor.getColumnIndex(CAR_MODEL)));
                 car.setMake(cursor.getString(cursor.getColumnIndex(CAR_MAKE)));
                 car.setYear(cursor.getString(cursor.getColumnIndex(CAR_YEAR)));
+                car.setUser(user);
 
                 carList.add(car);
             }

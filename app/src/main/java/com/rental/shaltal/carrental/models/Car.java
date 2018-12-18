@@ -10,7 +10,6 @@ Car {
     private int price;
     private boolean accidents;
     private boolean offer;
-
     private int id;
 
 
