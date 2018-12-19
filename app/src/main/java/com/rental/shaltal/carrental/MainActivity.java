@@ -35,6 +35,30 @@ public class MainActivity extends AppCompatActivity {
                 TestRestConnection(v);
             }
         });
+        DatabaseHelper databaseHelper = new DatabaseHelper(this);
+        databaseHelper.insertUser(new User("Shal",
+                "Tal",
+                GenderEnum.OTHER,
+                Md5.md5("ShalTal&21"),
+                "Palestine",
+                "Ramallah",
+                "911",
+                "admin@shaltal.com",
+                true,
+                ""
+        ));
+        databaseHelper.insertUser(new User("Shal",
+                "Tal",
+                GenderEnum.OTHER,
+                Md5.md5("ShalTal&21"),
+                "Palestine",
+                "Ramallah",
+                "911",
+                "admin2@shaltal.com",
+                true,
+                ""
+        ));
+
     }
 
     private void TestRestConnection(View v) {
@@ -56,8 +80,31 @@ public class MainActivity extends AppCompatActivity {
 //
 //        GetCarsAsyncTask getCarsAsyncTask = new GetCarsAsyncTask(MainActivity.this);
 //        getCarsAsyncTask.execute("http://www.mocky.io/v2/5bfea5963100006300bb4d9a");
-//        DatabaseHelper databaseHelper = new DatabaseHelper(this);
-//
+            DatabaseHelper databaseHelper = new DatabaseHelper(this);
+          databaseHelper.insertUser(new User("how",
+                    "how",
+                    GenderEnum.OTHER,
+                    Md5.md5("how&21"),
+                    "how",
+                    "how",
+                    "how",
+                    "how",
+                    false,
+                    ""
+            ));
+
+          databaseHelper.updateUser("how" ,new User("how2",
+                  "how2",
+                  GenderEnum.OTHER,
+                  Md5.md5("how&21"),
+                  "how",
+                  "how",
+                  "how2",
+                  "how2",
+                  false,
+                  ""
+          ));
+
 //        User user = databaseHelper.getUser("how");
 //        Log.i("Main", "onResume: Returned User "+user);
 

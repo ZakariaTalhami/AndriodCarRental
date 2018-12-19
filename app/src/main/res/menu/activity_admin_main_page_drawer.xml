@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+tools:showIn="navigation_view">
+
+<group android:checkableBehavior="single">
+    <item
+        android:id="@+id/nav_customers"
+        android:icon="@drawable/ic_customer_black_24dp"
+        android:title="Customers" />
+    <item
+        android:id="@+id/nav_admins"
+        android:icon="@drawable/ic_supervisor_account_black_24dp"
+        android:title="Admins" />
+    <item
+        android:id="@+id/nav_addAdmins"
+        android:icon="@drawable/ic_admin_add_black_24dp"
+        android:title="Add new Admin" />
+    <item
+        android:id="@+id/nav_adminReserve"
+        android:icon="@drawable/ic_collections_bookmark_black_24dp"
+        android:title="Reserved cars" />
+</group>
+
+<item android:title="">
+    <menu>
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_admin_exit_to_app_black_24dp"
+            android:title="Logout" />
+    </menu>
+</item>
+
+</menu>

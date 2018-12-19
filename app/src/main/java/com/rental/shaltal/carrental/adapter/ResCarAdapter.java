@@ -108,6 +108,7 @@ public class ResCarAdapter extends ArrayAdapter implements View.OnClickListener 
             result=convertView;
         }
         viewHolder.tv_Title.setText(car.getMake()+" "+car.getModel());
+        viewHolder.tv_Year.setText(car.getYear());
         viewHolder.tv_Distance.setText(((ReservedCar)car).getReservedDate());
         viewHolder.iv_Res.setOnClickListener(this);
         viewHolder.iv_Res.setTag(position);

@@ -107,6 +107,7 @@ public class FavCarAdapter extends ArrayAdapter implements View.OnClickListener 
             result=convertView;
         }
         viewHolder.tv_Title.setText(car.getMake()+" "+car.getModel());
+        viewHolder.tv_Year.setText(car.getYear());
         viewHolder.iv_Res.setOnClickListener(this);
         viewHolder.iv_Res.setTag(position);
         viewHolder.iv_Fav.setOnClickListener(this);

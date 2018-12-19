@@ -94,7 +94,12 @@ public class LoginScreen extends AppCompatActivity {
                 }
                 SharedPrefHelper.setLoggedIn(this);
                 CarSingleton.getInstance().setUser(user);
-                gotToMainPage();
+                if(user.isAdmin()){
+                    goToAdminPage();
+                }else{
+                    gotToMainPage();
+                }
+
             } else {
                 Log.e(TAG, "login: Entered Wrong Cred");
                 displayFailedLoginMessage();
@@ -117,6 +122,11 @@ public class LoginScreen extends AppCompatActivity {
     private void gotToMainPage() {
         // Todo: Enter the activity for the next jump
         Intent intent = new Intent(LoginScreen.this , MainPage.class);
+        this.startActivity(intent);
+    }
+
+    private void goToAdminPage(){
+        Intent intent = new Intent(LoginScreen.this , AdminMainPage.class);
         this.startActivity(intent);
     }
 
