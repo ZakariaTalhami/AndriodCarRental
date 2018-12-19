@@ -62,7 +62,7 @@ public class MainPage extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         
-
+        showHome();
     }
 
     private void setNameAndEmailInDrawerHeader(View headerView) {
@@ -168,6 +168,7 @@ public class MainPage extends AppCompatActivity
         Log.i(TAG, "showReservedCars: Loaded "+reservedCars.size()+" Reserved Cars");
         CarMenu carMenu = new CarMenu();
         carMenu.setCarList(reservedCars);
+        carMenu.setMode(CarMenu.RESERVED_MODE);
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.frag_container , carMenu , "CarMenu");
@@ -196,6 +197,7 @@ public class MainPage extends AppCompatActivity
         Log.i(TAG, "showReservedCars: Loaded "+favCars.size()+" favorite Cars");
         CarMenu carMenu = new CarMenu();
         carMenu.setCarList(favCars);
+        carMenu.setMode(CarMenu.FAVORED_MODE);
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.frag_container , carMenu , "CarMenu");
