@@ -1,14 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".HomePage_Fragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#092ba4">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Some Hostory added here !" />
+        android:layout_width="299dp"
+        android:layout_height="227dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="43dp"
+        android:layout_marginLeft="43dp"
+        android:layout_marginTop="142dp"
+        android:layout_marginEnd="42dp"
+        android:layout_marginRight="42dp"
+        android:layout_marginBottom="142dp"
+        android:text="History of car dealerships. The early cars were sold by automakers to customers directly, or through a variety of channels that included mail order, department stores, and traveling representatives. The first dealership in the United States was established in 1898 by William E. Metzger"
+        android:textSize="18sp"
+        android:textColor="#b9b907"
+        android:textFontWeight="500"/>
 
-</LinearLayout>
+</RelativeLayout>

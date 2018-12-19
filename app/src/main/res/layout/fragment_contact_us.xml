@@ -1,29 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ContactUsFragment"
     android:orientation="vertical">
 
+    <TextView
+        android:layout_width="237dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="74dp"
+        android:layout_marginLeft="74dp"
+        android:layout_marginTop="134dp"
+        android:layout_marginEnd="73dp"
+        android:layout_marginRight="73dp"
+        android:background="#e19f6d"
+        android:text="For additional information contact us by the provided methods"
+        android:textColor="#000"
+        android:textFontWeight="500"
+        android:textSize="20sp" />
 
-    <LinearLayout
+
+    <Button
+        android:id="@+id/btnContactUsByNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="9dp"
+        android:layout_marginLeft="9dp"
+        android:layout_marginTop="235dp"
+        android:layout_marginEnd="21dp"
+        android:layout_marginRight="21dp"
+        android:layout_toEndOf="@+id/btnContactUsByMail"
+        android:layout_toRightOf="@+id/btnContactUsByMail"
+        android:background="#bf6062"
+        android:text="Contact Us By Number" />
 
-        <Button
-            android:id="@+id/btnContactUsByNumber"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Contact Us By Number"/>
+    <Button
+        android:id="@+id/btnContactUsByMail"
+        android:layout_width="167dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="234dp"
+        android:background="#4365c2"
+        android:text="Contact Us By Mail" />
 
-        <Button
-            android:id="@+id/btnContactUsByMail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Contact Us By Mail" />
 
-    </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>

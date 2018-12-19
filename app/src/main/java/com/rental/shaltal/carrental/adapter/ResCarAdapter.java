@@ -15,18 +15,19 @@ import android.widget.Toast;
 import com.rental.shaltal.carrental.R;
 import com.rental.shaltal.carrental.helpers.DatabaseHelper;
 import com.rental.shaltal.carrental.models.Car;
+import com.rental.shaltal.carrental.models.ReservedCar;
 import com.rental.shaltal.carrental.models.User;
 import com.rental.shaltal.carrental.singleton.CarSingleton;
 
 import java.util.ArrayList;
 
-public class CarAdapter extends ArrayAdapter implements View.OnClickListener {
+public class ResCarAdapter extends ArrayAdapter implements View.OnClickListener {
 
     private static final String TAG ="CarAdapter";
     private ArrayList<Car> dataSet;
     Context mContext;
 
-    public CarAdapter(ArrayList<Car> data, Context context) {
+    public ResCarAdapter(ArrayList<Car> data, Context context) {
         super(context, R.layout.custom_car_layout, data);
         this.dataSet = data;
         this.mContext=context;
@@ -106,16 +107,8 @@ public class CarAdapter extends ArrayAdapter implements View.OnClickListener {
             viewHolder = (ViewHolder) convertView.getTag();
             result=convertView;
         }
-
         viewHolder.tv_Title.setText(car.getMake()+" "+car.getModel());
-        viewHolder.tv_Distance.setText(car.getDistance());
-        viewHolder.tv_Year.setText(car.getYear());
-        viewHolder.tv_Price.setText(car.getPrice()+"");
-        if (car.isOffer())
-            viewHolder.tv_Offer.setText("Car on Offer");
-        else
-            viewHolder.tv_Offer.setText("No offers");
-
+        viewHolder.tv_Distance.setText(((ReservedCar)car).getReservedDate());
         viewHolder.iv_Res.setOnClickListener(this);
         viewHolder.iv_Res.setTag(position);
         viewHolder.iv_Fav.setOnClickListener(this);

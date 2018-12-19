@@ -20,13 +20,13 @@ import com.rental.shaltal.carrental.singleton.CarSingleton;
 
 import java.util.ArrayList;
 
-public class CarAdapter extends ArrayAdapter implements View.OnClickListener {
+public class FavCarAdapter extends ArrayAdapter implements View.OnClickListener {
 
     private static final String TAG ="CarAdapter";
     private ArrayList<Car> dataSet;
     Context mContext;
 
-    public CarAdapter(ArrayList<Car> data, Context context) {
+    public FavCarAdapter(ArrayList<Car> data, Context context) {
         super(context, R.layout.custom_car_layout, data);
         this.dataSet = data;
         this.mContext=context;
@@ -106,16 +106,7 @@ public class CarAdapter extends ArrayAdapter implements View.OnClickListener {
             viewHolder = (ViewHolder) convertView.getTag();
             result=convertView;
         }
-
         viewHolder.tv_Title.setText(car.getMake()+" "+car.getModel());
-        viewHolder.tv_Distance.setText(car.getDistance());
-        viewHolder.tv_Year.setText(car.getYear());
-        viewHolder.tv_Price.setText(car.getPrice()+"");
-        if (car.isOffer())
-            viewHolder.tv_Offer.setText("Car on Offer");
-        else
-            viewHolder.tv_Offer.setText("No offers");
-
         viewHolder.iv_Res.setOnClickListener(this);
         viewHolder.iv_Res.setTag(position);
         viewHolder.iv_Fav.setOnClickListener(this);
@@ -138,6 +129,7 @@ public class CarAdapter extends ArrayAdapter implements View.OnClickListener {
                 boolean favored = databaseHelper.isFavored(clickedCar , user);
                 if (favored){
                     databaseHelper.deleteFavoriteCar(user, clickedCar);
+                    v.setVisibility(View.GONE);
                     Toast.makeText(mContext, "Added To favorites", Toast.LENGTH_SHORT).show();
                     ((ImageView)v).setImageResource(R.drawable.ic_favorite_black_32dp);
                 }else{

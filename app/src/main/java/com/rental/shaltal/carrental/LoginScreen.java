@@ -120,4 +120,9 @@ public class LoginScreen extends AppCompatActivity {
         this.startActivity(intent);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkIfLoggedIn();
+    }
 }

@@ -10,9 +10,14 @@ import android.util.Log;
 import static com.rental.shaltal.carrental.constants.DatabaseConstants.*;
 import com.rental.shaltal.carrental.constants.GenderEnum;
 import com.rental.shaltal.carrental.models.Car;
+import com.rental.shaltal.carrental.models.FavCar;
+import com.rental.shaltal.carrental.models.ReservedCar;
 import com.rental.shaltal.carrental.models.User;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -20,7 +25,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private String TAG = getClass().getSimpleName();
     public DatabaseHelper(Context context) {
-        super(context, "db2.1", null, 1);
+        super(context, "db2.2", null, 1);
         Log.i(TAG, "DatabaseHelper: Creating DatabaseHelper");
     }
 
@@ -121,6 +126,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             contentValues.put(USER_LASTNAME , user.getLastName());
             contentValues.put(USER_EMAIL , user.getEmail());
             contentValues.put(USER_PHONENUMBER , user.getPhoneNumber());
+            contentValues.put(USER_PASSWORD, user.getPassword());
 
             SQLiteDatabase sqLiteDatabase=  getWritableDatabase();
             affectedRows = sqLiteDatabase.update(TBL_USER,
@@ -258,6 +264,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 ContentValues contentValues = new ContentValues();
                 contentValues.put(RESERVED_USER , user.getEmail());
                 contentValues.put(RESERVED_CAR, id);
+                contentValues.put(RESERVED_TIME, new Date().getTime());
                 SQLiteDatabase sqLiteDatabase = getWritableDatabase();
                 sqLiteDatabase.insertOrThrow(TBL_RESERVED , null , contentValues);
                 success = true;
@@ -269,8 +276,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return  success;
     }
 
-    public List<Car> getReservedCars(User user){
-        List<Car> carList = null;
+    public List<ReservedCar> getReservedCars(User user){
+        List<ReservedCar> carList = null;
         Cursor cursor = null;
         try{
             carList = new ArrayList<>();
@@ -279,11 +286,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     "INNER JOIN "+TBL_CAR+" ON "+TBL_CAR+".id = "+TBL_RESERVED+"."+RESERVED_CAR+" " +
                     "WHERE "+RESERVED_USER+"=? " , new String[]{user.getEmail()});
             while(cursor.moveToNext()){
-                Car car = new Car();
+                ReservedCar car = new ReservedCar();
                 car.setModel(cursor.getString(cursor.getColumnIndex(CAR_MODEL)));
                 car.setMake(cursor.getString(cursor.getColumnIndex(CAR_MAKE)));
                 car.setYear(cursor.getString(cursor.getColumnIndex(CAR_YEAR)));
-
+                long milliseconds = cursor.getLong(cursor.getColumnIndex(RESERVED_TIME));
+                Date reservedDate = new Date(milliseconds);
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+                car.setReservedDate(dateFormat.format(reservedDate));
+                car.setUser(user);
                 carList.add(car);
             }
         }
@@ -295,6 +306,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
         return carList;
+    }
+
+    public boolean isReserved(Car car, User user){
+        boolean reserved = false;
+        try{
+            int id = getCarID(car);
+            if (id !=0){
+                Cursor cursor;
+                SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+                cursor = sqLiteDatabase.rawQuery("SELECT * FROM "+TBL_RESERVED+" " +
+                        "WHERE "+RESERVED_CAR+"=? and "+RESERVED_USER+"=?" , new String[]{id+"", user.getEmail()});
+                if (cursor.getCount() > 0){
+                    reserved = true;
+                }
+            }
+        }
+        catch (Exception e){
+
+        }
+        return reserved;
     }
 
 
@@ -327,8 +358,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return  success;
     }
 
-    public List<Car> getFavoriteCars(User user){
-        List<Car> carList = null;
+    public List<FavCar> getFavoriteCars(User user){
+        List<FavCar> carList = null;
         Cursor cursor = null;
         try{
             carList = new ArrayList<>();
@@ -337,10 +368,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     "INNER JOIN "+TBL_CAR+" ON "+TBL_CAR+".id = "+TBL_FAVORITE+"."+FAVORITE_CAR+" " +
                     "WHERE "+FAVORITE_USER+"=? " , new String[]{user.getEmail()});
             while(cursor.moveToNext()){
-                Car car = new Car();
+                FavCar car = new FavCar();
                 car.setModel(cursor.getString(cursor.getColumnIndex(CAR_MODEL)));
                 car.setMake(cursor.getString(cursor.getColumnIndex(CAR_MAKE)));
                 car.setYear(cursor.getString(cursor.getColumnIndex(CAR_YEAR)));
+                car.setUser(user);
 
                 carList.add(car);
             }
@@ -375,5 +407,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return success;
     }
 
+    public boolean isFavored(Car car, User user){
+        boolean favored = false;
+        try{
+            int id = getCarID(car);
+            if (id !=0){
+                Cursor cursor;
+                SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+                cursor = sqLiteDatabase.rawQuery("SELECT * FROM "+TBL_FAVORITE+" " +
+                        "WHERE "+FAVORITE_CAR+"=? and "+FAVORITE_USER+"=?" , new String[]{id+"" , user.getEmail()});
+                if (cursor.getCount() > 0){
+                    favored = true;
+                }
+            }
+        }
+        catch (Exception e){
 
+        }
+        return favored;
+    }
 }
