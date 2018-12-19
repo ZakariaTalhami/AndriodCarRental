@@ -25,7 +25,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private String TAG = getClass().getSimpleName();
     public DatabaseHelper(Context context) {
-        super(context, "db2.1", null, 1);
+        super(context, "db2.2", null, 1);
         Log.i(TAG, "DatabaseHelper: Creating DatabaseHelper");
     }
 
@@ -307,6 +307,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return carList;
     }
 
+    public boolean isReserved(Car car, User user){
+        boolean reserved = false;
+        try{
+            int id = getCarID(car);
+            if (id !=0){
+                Cursor cursor;
+                SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+                cursor = sqLiteDatabase.rawQuery("SELECT * FROM "+TBL_RESERVED+" " +
+                        "WHERE "+RESERVED_CAR+"=? and "+RESERVED_USER+"=?" , new String[]{id+"", user.getEmail()});
+                if (cursor.getCount() > 0){
+                    reserved = true;
+                }
+            }
+        }
+        catch (Exception e){
+
+        }
+        return reserved;
+    }
+
 
     /*
            Assuming that the car is not Favored
@@ -386,5 +406,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return success;
     }
 
+    public boolean isFavored(Car car, User user){
+        boolean favored = false;
+        try{
+            int id = getCarID(car);
+            if (id !=0){
+                Cursor cursor;
+                SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+                cursor = sqLiteDatabase.rawQuery("SELECT * FROM "+TBL_FAVORITE+" " +
+                        "WHERE "+FAVORITE_CAR+"=? and "+FAVORITE_USER+"=?" , new String[]{id+"" , user.getEmail()});
+                if (cursor.getCount() > 0){
+                    favored = true;
+                }
+            }
+        }
+        catch (Exception e){
 
+        }
+        return favored;
+    }
 }

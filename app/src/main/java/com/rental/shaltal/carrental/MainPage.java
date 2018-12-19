@@ -21,12 +21,16 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.rental.shaltal.carrental.helpers.DatabaseHelper;
 import com.rental.shaltal.carrental.helpers.SharedPrefHelper;
 import com.rental.shaltal.carrental.models.Car;
+import com.rental.shaltal.carrental.models.ReservedCar;
 import com.rental.shaltal.carrental.models.User;
 import com.rental.shaltal.carrental.singleton.CarSingleton;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MainPage extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -39,14 +43,6 @@ public class MainPage extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -151,9 +147,7 @@ public class MainPage extends AppCompatActivity
     }
 
     private void showHome() {
-
-        FrameLayout mylayout = (FrameLayout) findViewById(R.id.frag_container);
-        mylayout.removeAllViews();
+        clearFrags();
 
         HomePage_Fragment homePage = new HomePage_Fragment();
         FragmentManager fragmentManager = getFragmentManager();
@@ -166,11 +160,22 @@ public class MainPage extends AppCompatActivity
     }
 
     private void showReservedCars() {
+        clearFrags();
+
+        DatabaseHelper databaseHelper = new DatabaseHelper(this);
+        List<Car> reservedCars = new ArrayList<>();
+        reservedCars.addAll(databaseHelper.getReservedCars(CarSingleton.getInstance().getUser()));
+        Log.i(TAG, "showReservedCars: Loaded "+reservedCars.size()+" Reserved Cars");
+        CarMenu carMenu = new CarMenu();
+        carMenu.setCarList(reservedCars);
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.frag_container , carMenu , "CarMenu");
+        fragmentTransaction.commit();
     }
 
     private void showCarMenu() {
-        FrameLayout mylayout = (FrameLayout) findViewById(R.id.frag_container);
-        mylayout.removeAllViews();
+        clearFrags();
 
         CarMenu carMenu = new CarMenu();
         carMenu.setCarList(CarSingleton.getInstance().getCarList());
@@ -183,14 +188,38 @@ public class MainPage extends AppCompatActivity
     }
 
     private void showFavCars() {
+        clearFrags();
+
+        DatabaseHelper databaseHelper = new DatabaseHelper(this);
+        List<Car> favCars = new ArrayList<>();
+        favCars.addAll(databaseHelper.getFavoriteCars(CarSingleton.getInstance().getUser()));
+        Log.i(TAG, "showReservedCars: Loaded "+favCars.size()+" favorite Cars");
+        CarMenu carMenu = new CarMenu();
+        carMenu.setCarList(favCars);
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.frag_container , carMenu , "CarMenu");
+        fragmentTransaction.commit();
     }
 
     private void showSpecialOffer() {
+        clearFrags();
+
+        List<Car> offerCars = CarSingleton.getInstance().getCarList().stream()
+                .filter(car -> car.isOffer())
+                .collect(Collectors.toList());
+        Log.i(TAG, "showSpecialOffer: Loaded "+offerCars.size()+" Cars on offer");
+        CarMenu carMenu = new CarMenu();
+        carMenu.setCarList(offerCars);
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.frag_container , carMenu , "CarMenu");
+        fragmentTransaction.commit();
+
     }
 
     private void showContactPage() {
-        FrameLayout mylayout = (FrameLayout) findViewById(R.id.frag_container);
-        mylayout.removeAllViews();
+        clearFrags();
 
         ContactUsFragment ContactUs = new ContactUsFragment();
         FragmentManager fragmentManager = getFragmentManager();
@@ -203,5 +232,10 @@ public class MainPage extends AppCompatActivity
         SharedPrefHelper.removeLoggedIn(this);
         Intent intent = new Intent(MainPage.this , LoginScreen.class);
         this.startActivity(intent);
+    }
+
+    private void clearFrags(){
+        FrameLayout frag_container = (FrameLayout) findViewById(R.id.frag_container);
+        frag_container.removeAllViews();
     }
 }
