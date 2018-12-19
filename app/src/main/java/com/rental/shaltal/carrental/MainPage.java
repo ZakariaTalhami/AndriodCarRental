@@ -157,6 +157,14 @@ public class MainPage extends AppCompatActivity
     }
 
     private void showProfile() {
+        clearFrags();
+        ProfileFragment profile = new ProfileFragment();
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.frag_container, profile,"Profile Page");
+        fragmentTransaction.commit();
+
+
     }
 
     private void showReservedCars() {

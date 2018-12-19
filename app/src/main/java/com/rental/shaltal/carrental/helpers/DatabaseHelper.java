@@ -126,6 +126,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             contentValues.put(USER_LASTNAME , user.getLastName());
             contentValues.put(USER_EMAIL , user.getEmail());
             contentValues.put(USER_PHONENUMBER , user.getPhoneNumber());
+            contentValues.put(USER_PASSWORD, user.getPassword());
 
             SQLiteDatabase sqLiteDatabase=  getWritableDatabase();
             affectedRows = sqLiteDatabase.update(TBL_USER,
