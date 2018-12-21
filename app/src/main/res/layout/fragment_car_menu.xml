@@ -6,6 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".CarMenu">
 
+    <Button
+        android:id="@+id/bt_filter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:text="Filter"
+        />
 
     <ListView
         android:id="@+id/lv_CarMenu"

@@ -8,27 +8,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.rental.shaltal.carrental.adapter.AdminResCarAdapter;
 import com.rental.shaltal.carrental.adapter.CarAdapter;
 import com.rental.shaltal.carrental.adapter.FavCarAdapter;
 import com.rental.shaltal.carrental.adapter.ResCarAdapter;
-import com.rental.shaltal.carrental.adapter.customCarAddapter;
+import com.rental.shaltal.carrental.dialogs.FilterDialog;
 import com.rental.shaltal.carrental.models.Car;
-import com.rental.shaltal.carrental.models.FavCar;
 import com.rental.shaltal.carrental.singleton.CarSingleton;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CarMenu extends Fragment {
+public class CarMenu extends Fragment  implements FilterDialog.FilterDialogInterfae{
 
 
     private static final String TAG = "CarMenu";
@@ -41,6 +43,7 @@ public class CarMenu extends Fragment {
     public static final int FAVORED_MODE =2;
     public static final int ADMIN_RESERVED_MODE =3;
 
+    private ListView thisListView;
     public CarMenu() {
         carList = new ArrayList<>();
         carSingleton = CarSingleton.getInstance();
@@ -68,26 +71,20 @@ public class CarMenu extends Fragment {
         Log.i("", "onCreateView: Creating CarMenu Frag");
         View view = inflater.inflate(R.layout.fragment_car_menu, container, false);;
         ListView listView = (ListView) view.findViewById(R.id.lv_CarMenu);
+        thisListView = listView;
+        Button bt_filter = (Button) view.findViewById(R.id.bt_filter);
+        bt_filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openFilterDialog();
+            }
+        });
+
+
         Log.i(TAG, "onCreateView: List View "+listView);
 
-        switch (this.mode){
-            case DEFAULT_MODE:
-                CarAdapter customCarAddapter = new CarAdapter((ArrayList<Car>) this.carList,getActivity().getApplicationContext());
-                listView.setAdapter(customCarAddapter);
-                break;
-            case RESERVED_MODE:
-                ResCarAdapter resCarAdapter = new ResCarAdapter((ArrayList<Car>) this.carList,getActivity().getApplicationContext());
-                listView.setAdapter(resCarAdapter);
-                break;
-            case FAVORED_MODE:
-                FavCarAdapter favCarAddapter = new FavCarAdapter((ArrayList<Car>) this.carList,getActivity().getApplicationContext());
-                listView.setAdapter(favCarAddapter);
-                break;
-            case ADMIN_RESERVED_MODE:
-                AdminResCarAdapter adminResCarAdapter = new AdminResCarAdapter((ArrayList<Car>)this.carList , getActivity().getApplicationContext());
-                listView.setAdapter(adminResCarAdapter);
-                    break;
-        }
+
+        addListviewAdapter(listView , this.carList);
 
 //        CarAdapter customCarAddapter = new CarAdapter((ArrayList<Car>) this.carList,getActivity().getApplicationContext());
 //        listView.setAdapter(customCarAddapter);
@@ -162,4 +159,55 @@ public class CarMenu extends Fragment {
         return view;
     }
 
+    private void openFilterDialog() {
+        FilterDialog filterDialog = new FilterDialog();
+        filterDialog.setTargetFragment(this , 0);
+        filterDialog.show(getFragmentManager() , "filter");
+    }
+
+    @Override
+    public void filterData(String price, String model, String make) {
+        Log.i(TAG, "filterData: "+price+" "+model+" "+make+" ");
+        List<Car> filteredList;
+        try{
+            boolean usePrice = (price==null || price.isEmpty());
+            boolean useModel = (model==null || model.isEmpty());
+            boolean useMake = (make==null || make.isEmpty());
+            Log.i(TAG, "filterData: "+usePrice+" "+useModel+" "+useMake+" ");
+            filteredList = this.carList.stream()
+                    .filter(car ->
+                                 (useMake || car.getMake().equalsIgnoreCase(make))&&
+                                 (usePrice || car.getPrice() == Integer.parseInt(price))&&
+                                 (useModel || car.getModel().equalsIgnoreCase(model))
+                    ).collect(Collectors.toList());
+
+            addListviewAdapter(thisListView , filteredList);
+        }catch (Exception e){
+            Toast.makeText(getActivity().getApplicationContext(), "failed to filter Cars", Toast.LENGTH_SHORT).show();
+        }
+
+
+//        thisListView.setAdapter(null);
+    }
+
+    private void addListviewAdapter(ListView listView , List<Car> carList){
+        switch (this.mode){
+            case DEFAULT_MODE:
+                CarAdapter customCarAddapter = new CarAdapter((ArrayList<Car>) carList,getActivity().getApplicationContext());
+                listView.setAdapter(customCarAddapter);
+                break;
+            case RESERVED_MODE:
+                ResCarAdapter resCarAdapter = new ResCarAdapter((ArrayList<Car>) carList,getActivity().getApplicationContext());
+                listView.setAdapter(resCarAdapter);
+                break;
+            case FAVORED_MODE:
+                FavCarAdapter favCarAddapter = new FavCarAdapter((ArrayList<Car>) carList,getActivity().getApplicationContext());
+                listView.setAdapter(favCarAddapter);
+                break;
+            case ADMIN_RESERVED_MODE:
+                AdminResCarAdapter adminResCarAdapter = new AdminResCarAdapter((ArrayList<Car>)carList , getActivity().getApplicationContext());
+                listView.setAdapter(adminResCarAdapter);
+                break;
+        }
+    }
 }
