@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.rental.shaltal.carrental.helpers.DatabaseHelper;
 import com.rental.shaltal.carrental.helpers.SharedPrefHelper;
@@ -29,7 +31,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class AdminMainPage extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener , AdminRegister.registerReturn {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +43,34 @@ public class AdminMainPage extends AppCompatActivity
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerClosed(drawerView);
+                setNameAndEmailInDrawerHeader(drawerView);
+
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+        };
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        showCustomers();
+    }
+
+    private void setNameAndEmailInDrawerHeader(View headerView) {
+        User loggedInUser = CarSingleton.getInstance().getUser();
+        if(loggedInUser != null){
+            TextView nav_header_email = (TextView) headerView.findViewById(R.id.nav_header_email);
+            TextView nav_header_name = (TextView) headerView.findViewById(R.id.nav_header_name);
+
+            nav_header_email.setText(loggedInUser.getEmail());
+            nav_header_name.setText(loggedInUser.getFirstName()+" "+ loggedInUser.getLastName());
+        }
     }
 
     @Override
@@ -113,11 +137,13 @@ public class AdminMainPage extends AppCompatActivity
         reservedCars.addAll(databaseHelper.getAllReservedCars());
         CarMenu carMenu = new CarMenu();
         carMenu.setCarList(reservedCars);
-        carMenu.setMode(CarMenu.RESERVED_MODE);
+        carMenu.setMode(CarMenu.ADMIN_RESERVED_MODE);
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.frag_container , carMenu , "CarMenu");
         fragmentTransaction.commit();
+
+        setToolbarTittle("Reserved Cars");
     }
 
     private void showAdmins() {
@@ -133,6 +159,8 @@ public class AdminMainPage extends AppCompatActivity
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.frag_container, userListFragment,"userListFragment");
         fragmentTransaction.commit();
+
+        setToolbarTittle("Admin Accounts");
     }
 
     private void showAddAdmin() {
@@ -142,6 +170,8 @@ public class AdminMainPage extends AppCompatActivity
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.frag_container, adminRegister,"userListFragment");
         fragmentTransaction.commit();
+
+        setToolbarTittle("New Admin");
     }
 
     private void showCustomers() {
@@ -150,12 +180,15 @@ public class AdminMainPage extends AppCompatActivity
         DatabaseHelper databaseHelper = new DatabaseHelper(this);
         User loggedInUser = CarSingleton.getInstance().getUser();
         List<User> userList = databaseHelper.getAllUsersOtherThan(loggedInUser.getEmail());
+        userList = userList.stream().filter(user -> !user.isAdmin()).collect(Collectors.toList());
         UserListFragment userListFragment = new UserListFragment();
         userListFragment.setUserList(userList);
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.frag_container, userListFragment,"userListFragment");
         fragmentTransaction.commit();
+
+        setToolbarTittle("Customers");
     }
 
 
@@ -168,5 +201,15 @@ public class AdminMainPage extends AppCompatActivity
     private void clearFrags(){
         FrameLayout frag_container = (FrameLayout) findViewById(R.id.frag_container);
         frag_container.removeAllViews();
+    }
+
+    private void setToolbarTittle(String title){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
+        toolbar.setTitle(title);
+    }
+
+    @Override
+    public void returnToAdminPage() {
+        showAdmins();
     }
 }

@@ -345,9 +345,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             carList = new ArrayList<>();
             SQLiteDatabase sqLiteDatabase = getReadableDatabase();
             cursor = sqLiteDatabase.rawQuery("SELECT * FROM " + TBL_RESERVED + " " +
-                    "INNER JOIN " + TBL_CAR + " ON " + TBL_CAR + ".id = " + TBL_RESERVED + "." + RESERVED_CAR + " ", new String[]{});
+                    "INNER JOIN " + TBL_CAR + " ON " + TBL_CAR + ".id = " + TBL_RESERVED + "." + RESERVED_CAR + " " +
+                    "INNER JOIN " + TBL_USER + " ON " +TBL_USER + "." + USER_EMAIL + "="+TBL_RESERVED+"."+RESERVED_USER, new String[]{});
             while (cursor.moveToNext()) {
                 ReservedCar car = new ReservedCar();
+                User user = new User();
+
+                // Creating the Car instance
                 car.setModel(cursor.getString(cursor.getColumnIndex(CAR_MODEL)));
                 car.setMake(cursor.getString(cursor.getColumnIndex(CAR_MAKE)));
                 car.setYear(cursor.getString(cursor.getColumnIndex(CAR_YEAR)));
@@ -355,7 +359,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Date reservedDate = new Date(milliseconds);
                 DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
                 car.setReservedDate(dateFormat.format(reservedDate));
-//                car.setUser(user);
+
+                // Creating the user instance
+                user.setEmail(cursor.getString(cursor.getColumnIndex(USER_EMAIL)));
+                user.setFirstName(cursor.getString(cursor.getColumnIndex(USER_FIRSTNAME)));
+                user.setLastName(cursor.getString(cursor.getColumnIndex(USER_LASTNAME)));
+                user.setPhoneNumber(cursor.getString(cursor.getColumnIndex(USER_PHONENUMBER)));
+
+                car.setUser(user);
                 carList.add(car);
             }
         } catch (Exception e) {

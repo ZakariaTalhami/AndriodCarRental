@@ -15,18 +15,19 @@ import android.widget.Toast;
 import com.rental.shaltal.carrental.R;
 import com.rental.shaltal.carrental.helpers.DatabaseHelper;
 import com.rental.shaltal.carrental.models.Car;
+import com.rental.shaltal.carrental.models.ReservedCar;
 import com.rental.shaltal.carrental.models.User;
 import com.rental.shaltal.carrental.singleton.CarSingleton;
 
 import java.util.ArrayList;
 
-public class FavCarAdapter extends ArrayAdapter implements View.OnClickListener {
+public class AdminResCarAdapter extends ArrayAdapter implements View.OnClickListener {
 
     private static final String TAG ="CarAdapter";
     private ArrayList<Car> dataSet;
     Context mContext;
 
-    public FavCarAdapter(ArrayList<Car> data, Context context) {
+    public AdminResCarAdapter(ArrayList<Car> data, Context context) {
         super(context, R.layout.custom_car_layout, data);
         this.dataSet = data;
         this.mContext=context;
@@ -54,7 +55,7 @@ public class FavCarAdapter extends ArrayAdapter implements View.OnClickListener 
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         Log.i(TAG, "getView: start");
        Car car = (Car)getItem(position);
-       User user = CarSingleton.getInstance().getUser();
+       User user = ((ReservedCar)car).getUser();
         ViewHolder viewHolder;
         final View result;
         if (convertView == null){
@@ -108,6 +109,9 @@ public class FavCarAdapter extends ArrayAdapter implements View.OnClickListener 
         }
         viewHolder.tv_Title.setText(car.getMake()+" "+car.getModel());
         viewHolder.tv_Year.setText(car.getYear());
+        viewHolder.tv_Distance.setText(((ReservedCar)car).getReservedDate());
+        viewHolder.tv_Price.setText(user.getFirstName()+" "+user.getLastName());
+        viewHolder.tv_Offer.setText(user.getEmail());
         viewHolder.iv_Res.setOnClickListener(this);
         viewHolder.iv_Res.setTag(position);
         viewHolder.iv_Fav.setOnClickListener(this);
@@ -120,7 +124,6 @@ public class FavCarAdapter extends ArrayAdapter implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
-//        int position = v.getTag();
         Car clickedCar = (Car) getItem((Integer) v.getTag());
         User user = CarSingleton.getInstance().getUser();
         DatabaseHelper databaseHelper = new DatabaseHelper(mContext);
@@ -131,14 +134,11 @@ public class FavCarAdapter extends ArrayAdapter implements View.OnClickListener 
                 boolean favored = databaseHelper.isFavored(clickedCar , user);
                 if (favored){
                     databaseHelper.deleteFavoriteCar(user, clickedCar);
-                    v.setVisibility(View.GONE);
-                    Toast.makeText(mContext, "Removed To favorites", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "Added To favorites", Toast.LENGTH_SHORT).show();
                     ((ImageView)v).setImageResource(R.drawable.ic_favorite_black_32dp);
-                    this.dataSet.remove((int) v.getTag());
-                    this.notifyDataSetChanged();
                 }else{
                     databaseHelper.insertFavoriteCar(user, clickedCar);
-                    Toast.makeText(mContext, "Added from favorites", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "Removed from favorites", Toast.LENGTH_SHORT).show();
                     ((ImageView)v).setImageResource(R.drawable.ic_favorite_border_black_24dp);
                 }
                 break;
