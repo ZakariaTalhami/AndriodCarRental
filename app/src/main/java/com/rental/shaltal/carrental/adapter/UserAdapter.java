@@ -109,6 +109,8 @@ public class UserAdapter extends ArrayAdapter implements View.OnClickListener {
         User user = CarSingleton.getInstance().getUser();
         DatabaseHelper databaseHelper = new DatabaseHelper(mContext);
         databaseHelper.deleteUser(clickedUser);
+        this.dataSet.remove((int)v.getTag());
+        this.notifyDataSetChanged();
         v.setVisibility(View.GONE);
     }
 }

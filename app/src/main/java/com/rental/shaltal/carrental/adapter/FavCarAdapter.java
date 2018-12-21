@@ -120,6 +120,7 @@ public class FavCarAdapter extends ArrayAdapter implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
+//        int position = v.getTag();
         Car clickedCar = (Car) getItem((Integer) v.getTag());
         User user = CarSingleton.getInstance().getUser();
         DatabaseHelper databaseHelper = new DatabaseHelper(mContext);
@@ -131,11 +132,13 @@ public class FavCarAdapter extends ArrayAdapter implements View.OnClickListener 
                 if (favored){
                     databaseHelper.deleteFavoriteCar(user, clickedCar);
                     v.setVisibility(View.GONE);
-                    Toast.makeText(mContext, "Added To favorites", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "Removed To favorites", Toast.LENGTH_SHORT).show();
                     ((ImageView)v).setImageResource(R.drawable.ic_favorite_black_32dp);
+                    this.dataSet.remove((int) v.getTag());
+                    this.notifyDataSetChanged();
                 }else{
                     databaseHelper.insertFavoriteCar(user, clickedCar);
-                    Toast.makeText(mContext, "Removed from favorites", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "Added from favorites", Toast.LENGTH_SHORT).show();
                     ((ImageView)v).setImageResource(R.drawable.ic_favorite_border_black_24dp);
                 }
                 break;

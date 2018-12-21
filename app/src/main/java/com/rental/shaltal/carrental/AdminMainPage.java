@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class AdminMainPage extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener , AdminRegister.registerReturn {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -206,5 +206,10 @@ public class AdminMainPage extends AppCompatActivity
     private void setToolbarTittle(String title){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
         toolbar.setTitle(title);
+    }
+
+    @Override
+    public void returnToAdminPage() {
+        showAdmins();
     }
 }

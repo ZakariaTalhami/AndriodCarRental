@@ -48,6 +48,10 @@ public class AdminRegister extends Fragment {
         // Required empty public constructor
     }
 
+    public interface registerReturn{
+        public void returnToAdminPage();
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -104,7 +108,7 @@ public class AdminRegister extends Fragment {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                goToLoginPage();
+               showAdmins();
             }
         });
 
@@ -115,6 +119,11 @@ public class AdminRegister extends Fragment {
             }
         });
         return view;
+    }
+
+    private void showAdmins() {
+        registerReturn registerReturn = (AdminRegister.registerReturn) getActivity();
+        registerReturn.returnToAdminPage();
     }
 
     private void attemptToRegister(View view) {
@@ -226,6 +235,7 @@ public class AdminRegister extends Fragment {
 
             // Return to the login page
             Toast.makeText(getActivity().getApplicationContext(), "Admin added", Toast.LENGTH_LONG).show();
+            showAdmins();
         }else{
             Toast.makeText(getActivity().getApplicationContext(), "Register Failed, Invalid fields", Toast.LENGTH_LONG).show();
         }
