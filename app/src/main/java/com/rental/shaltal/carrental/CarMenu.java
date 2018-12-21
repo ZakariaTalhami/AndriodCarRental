@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.rental.shaltal.carrental.adapter.AdminResCarAdapter;
 import com.rental.shaltal.carrental.adapter.CarAdapter;
 import com.rental.shaltal.carrental.adapter.FavCarAdapter;
 import com.rental.shaltal.carrental.adapter.ResCarAdapter;
@@ -38,6 +39,7 @@ public class CarMenu extends Fragment {
     public static final int DEFAULT_MODE =0;
     public static final int RESERVED_MODE =1;
     public static final int FAVORED_MODE =2;
+    public static final int ADMIN_RESERVED_MODE =3;
 
     public CarMenu() {
         carList = new ArrayList<>();
@@ -81,6 +83,10 @@ public class CarMenu extends Fragment {
                 FavCarAdapter favCarAddapter = new FavCarAdapter((ArrayList<Car>) this.carList,getActivity().getApplicationContext());
                 listView.setAdapter(favCarAddapter);
                 break;
+            case ADMIN_RESERVED_MODE:
+                AdminResCarAdapter adminResCarAdapter = new AdminResCarAdapter((ArrayList<Car>)this.carList , getActivity().getApplicationContext());
+                listView.setAdapter(adminResCarAdapter);
+                    break;
         }
 
 //        CarAdapter customCarAddapter = new CarAdapter((ArrayList<Car>) this.carList,getActivity().getApplicationContext());
@@ -133,6 +139,21 @@ public class CarMenu extends Fragment {
                     tv_Distance.setVisibility(visibility);
                     iv_Fav.setVisibility(visibility);
                     iv_Res.setVisibility(visibility);
+                }
+            });
+        }else if(this.mode == ADMIN_RESERVED_MODE){
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    TextView tv_Year = (TextView) view.findViewById(R.id.tv_carItemYear);
+                    TextView tv_Distance = (TextView) view.findViewById(R.id.tv_carItemDistance);
+                    TextView tv_offer = (TextView) view.findViewById(R.id.tv_carItemOffer);
+                    TextView tv_price = (TextView) view.findViewById(R.id.tv_carItemPrice);
+                    int visibility = (tv_Year.getVisibility() == View.VISIBLE)? View.GONE:View.VISIBLE;
+                    tv_Year.setVisibility(visibility);
+                    tv_Distance.setVisibility(visibility);
+                    tv_offer.setVisibility(visibility);
+                    tv_price.setVisibility(visibility);
                 }
             });
         }

@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import static com.rental.shaltal.carrental.constants.DatabaseConstants.*;
 
@@ -213,6 +214,8 @@ public class RegisterActivity extends AppCompatActivity {
 
             // Return to the login page
             goToLoginPage();
+        }else{
+            Toast.makeText(this, "Register Failed, Invalid fields", Toast.LENGTH_LONG).show();
         }
     }
 

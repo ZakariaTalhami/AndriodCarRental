@@ -132,7 +132,7 @@ public class ProfileFragment extends Fragment {
                 editedUser.setLastName(txtLastName.getText().toString());
                 editedUser.setPhoneNumber(txtPhoneNumber.getText().toString());
                 editedUser.setPassword(Md5.md5(newPassword));
-
+                editedUser.setEmail(oldEmail);
 
                 DatabaseHelper databaseHelper = new DatabaseHelper(getActivity().getApplicationContext());
                 databaseHelper.updateUser(oldEmail,editedUser);

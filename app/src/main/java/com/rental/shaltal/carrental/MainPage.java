@@ -154,6 +154,8 @@ public class MainPage extends AppCompatActivity
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.frag_container, homePage,"HomePage");
         fragmentTransaction.commit();
+
+        setToolbarTittle("Home");
     }
 
     private void showProfile() {
@@ -164,7 +166,7 @@ public class MainPage extends AppCompatActivity
         fragmentTransaction.add(R.id.frag_container, profile,"Profile Page");
         fragmentTransaction.commit();
 
-
+        setToolbarTittle("Profile");
     }
 
     private void showReservedCars() {
@@ -181,6 +183,8 @@ public class MainPage extends AppCompatActivity
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.frag_container , carMenu , "CarMenu");
         fragmentTransaction.commit();
+
+        setToolbarTittle("Reserved Cars");
     }
 
     private void showCarMenu() {
@@ -193,7 +197,7 @@ public class MainPage extends AppCompatActivity
         fragmentTransaction.add(R.id.frag_container , carMenu , "CarMenu");
         fragmentTransaction.commit();
 
-
+        setToolbarTittle("Cars for Rent");
     }
 
     private void showFavCars() {
@@ -210,6 +214,8 @@ public class MainPage extends AppCompatActivity
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.frag_container , carMenu , "CarMenu");
         fragmentTransaction.commit();
+
+        setToolbarTittle("Favorite Cars");
     }
 
     private void showSpecialOffer() {
@@ -226,6 +232,7 @@ public class MainPage extends AppCompatActivity
         fragmentTransaction.add(R.id.frag_container , carMenu , "CarMenu");
         fragmentTransaction.commit();
 
+        setToolbarTittle("Cars on sale");
     }
 
     private void showContactPage() {
@@ -236,6 +243,8 @@ public class MainPage extends AppCompatActivity
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.frag_container, ContactUs,"ContactUs");
         fragmentTransaction.commit();
+
+        setToolbarTittle("Contact Us");
     }
 
     private void goToLoginPage(){
@@ -247,5 +256,10 @@ public class MainPage extends AppCompatActivity
     private void clearFrags(){
         FrameLayout frag_container = (FrameLayout) findViewById(R.id.frag_container);
         frag_container.removeAllViews();
+    }
+
+    private void setToolbarTittle(String title){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
+        toolbar.setTitle(title);
     }
 }

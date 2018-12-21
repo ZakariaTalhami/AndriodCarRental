@@ -225,7 +225,9 @@ public class AdminRegister extends Fragment {
             databaseHelper.insertUser(user);
 
             // Return to the login page
-            Toast.makeText(getActivity().getApplicationContext(), "Admin added", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), "Admin added", Toast.LENGTH_LONG).show();
+        }else{
+            Toast.makeText(getActivity().getApplicationContext(), "Register Failed, Invalid fields", Toast.LENGTH_LONG).show();
         }
     }
 
